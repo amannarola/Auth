@@ -40,7 +40,7 @@ passport.use(new GoogleStrategy({
                             throw err;
                         return done(null, newUser);
                     })
-                    console.log(profile);
+                    //console.log(profile);
                 }
             });
         });
@@ -51,9 +51,12 @@ passport.use(new GoogleStrategy({
 passport.use(new FacebookStrategy({
     clientID: configAuth.facebookAuth.clientID,
     clientSecret: configAuth.facebookAuth.clientSecret,
-    callbackURL: configAuth.facebookAuth.callbackURL
-  },
-  function(accessToken, refreshToken, profile, done) {
+    callbackURL: configAuth.facebookAuth.callbackURL,
+  }, function(accessToken, refreshToken, profile, done){
+      console.log(profile);
+      return done(null,profile);
+  }
+  /* function(accessToken, refreshToken, profile, done) {
         process.nextTick(function(){
             User.findOne({'facebook.id': profile.id}, function(err, user){
                 if(err)
@@ -64,7 +67,7 @@ passport.use(new FacebookStrategy({
                     var newUser = new User();
                     newUser.facebook.id = profile.id;
                     newUser.facebook.token = accessToken;
-                    newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
+                    newUser.facebook.name = profile.name.familyName + '' + profile.name.givenName;
                     newUser.facebook.email = profile.emails[0].value;
 
                     newUser.save(function(err){
@@ -75,8 +78,7 @@ passport.use(new FacebookStrategy({
                     console.log(profile);
                 }
             });
-        });
-    }
+        }); */
 
 ));
 
